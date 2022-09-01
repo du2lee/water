@@ -10,6 +10,12 @@ class AppController extends GetxService {
   RxList<String> result = RxList.empty(growable : true);
   List<String> get getResult => result;
 
+  @override
+  void onInit() {
+      scrapyManufacturer();
+      super.onInit();
+  }
+
   Future<List<String>> scrapyManufacturer() async {
 
     final response = await http.get(Uri.parse(url));
@@ -32,11 +38,9 @@ class AppController extends GetxService {
     
     for (int i = 0 ; i < tr[0].length; i++){
       List data = tr[0][i].getElementsByClassName('al');
-      result.add(data[1].text);
-      // if (data[0].text == '먹는샘물' && data[1].text != '전체')
-      //   result.add(data[1].text);
+      if (data[0].text == '먹는샘물' && data[1].text != '전체')
+        result.add(data[1].text);
     }
-    print(result);
     return result;
   }
 }

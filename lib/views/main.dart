@@ -30,7 +30,7 @@ class DirtyWater extends GetView<AppController> {
           return ListView.separated(
             itemCount: controller.getResult.length,
             itemBuilder: (context, index) {
-              return _ItemWidget();
+              return _ItemWidget(index, controller.getResult);
             },
             separatorBuilder: ((context, index) {
               return const Divider();
@@ -40,10 +40,10 @@ class DirtyWater extends GetView<AppController> {
     );
   }
 
-  Widget _ItemWidget(){
+  Widget _ItemWidget(int index, List<String> result){
     return ListTile(
       leading: const Icon(Icons.location_city),
-      title: Text('Test 입니다.'),
+      title: Text(result[index]),
       subtitle: Text('안녕하세요')
     );
   }
