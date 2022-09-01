@@ -7,8 +7,11 @@ class AppController extends GetxService {
   static AppController get to => Get.find();
   String url = 'http://me.go.kr/home/web/index.do?menuId=10227';
   
+  RxList<String> result = RxList.empty(growable : true);
+  List<String> get getResult => result;
+
   Future<List<String>> scrapyManufacturer() async {
-    List<String> result = List.empty(growable : true);
+
     final response = await http.get(Uri.parse(url));
     dom.Document document = parse.parse(response.body);
     
@@ -29,9 +32,11 @@ class AppController extends GetxService {
     
     for (int i = 0 ; i < tr[0].length; i++){
       List data = tr[0][i].getElementsByClassName('al');
-      if (data[0].text == '먹는샘물' && data[1].text != '전체')
-        result.add(data[1].text);
+      result.add(data[1].text);
+      // if (data[0].text == '먹는샘물' && data[1].text != '전체')
+      //   result.add(data[1].text);
     }
+    print(result);
     return result;
   }
 }
