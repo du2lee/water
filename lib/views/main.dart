@@ -9,7 +9,7 @@ class DirtyWater extends GetView<AppController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Center(child: customHomeAppBar('FreeWiFi', 'Ulsan')),
+          title: Center(child: customHomeAppBar('Dangerous', 'Water')),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           actions: <Widget>[
@@ -17,7 +17,8 @@ class DirtyWater extends GetView<AppController> {
                 icon: const Icon(Icons.folder_special_rounded,
                     size: 35.0, color: Colors.blueAccent),
                 onPressed: () {
-                  Get.toNamed('/favorites');
+                  // Get.toNamed('/favorites');
+                  controller.scrapyManufacturer();
                 })
           ]),
       extendBodyBehindAppBar: true,
