@@ -18,7 +18,7 @@ class DirtyWater extends GetView<AppController> {
                 icon: const Icon(Icons.folder_special_rounded,
                     size: 35.0, color: Colors.blueAccent),
                 onPressed: () {
-                  controller.scrapyManufacturer();
+                  controller.scrapyBrand();
                 })
           ]),  
       extendBodyBehindAppBar: true,
@@ -28,9 +28,9 @@ class DirtyWater extends GetView<AppController> {
             Image.asset('assets/images/safeWater.png', width: 200.w, height: 200.h),);
         else
           return ListView.separated(
-            itemCount: controller.getResult.length,
+            itemCount: controller.getManufacturers.length,
             itemBuilder: (context, index) {
-              return _ItemWidget(index, controller.getResult);
+              return _ItemWidget(index, controller.getManufacturers);
             },
             separatorBuilder: ((context, index) {
               return const Divider();
@@ -47,5 +47,4 @@ class DirtyWater extends GetView<AppController> {
       subtitle: Text('안녕하세요')
     );
   }
-
 }
