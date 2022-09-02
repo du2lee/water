@@ -13,24 +13,24 @@ class DirtyWater extends GetView<AppController> {
           title: Center(child: customHomeAppBar('Dangerous', 'Water')),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          actions: <Widget>[
-            IconButton(
-                icon: const Icon(Icons.folder_special_rounded,
-                    size: 35.0, color: Colors.blueAccent),
-                onPressed: () {
-                  controller.scrapyBrand();
-                })
-          ]),  
+          // actions: <Widget>[
+          //   IconButton(
+          //       icon: const Icon(Icons.folder_special_rounded,
+          //           size: 35.0, color: Colors.blueAccent),
+          //       onPressed: () {
+          //         controller.scrapyBrand();
+          //       })]
+          ),  
       extendBodyBehindAppBar: true,
       body: Obx((() {
-        if (controller.getResult.isEmpty)
+        if (controller.getManufacturers.isEmpty)
           return Center(child: 
             Image.asset('assets/images/safeWater.png', width: 200.w, height: 200.h),);
         else
           return ListView.separated(
-            itemCount: controller.getManufacturers.length,
+            itemCount: controller.getResult.length,
             itemBuilder: (context, index) {
-              return _ItemWidget(index, controller.getManufacturers);
+              return _ItemWidget(index, controller.getResult);
             },
             separatorBuilder: ((context, index) {
               return const Divider();
@@ -40,11 +40,11 @@ class DirtyWater extends GetView<AppController> {
     );
   }
 
-  Widget _ItemWidget(int index, List<String> result){
+  Widget _ItemWidget(int index, List<List> result){
     return ListTile(
       leading: const Icon(Icons.location_city),
-      title: Text(result[index]),
-      subtitle: Text('안녕하세요')
+      title: Text(result[index][1]),
+      subtitle: Text(result[index][0])
     );
   }
 }

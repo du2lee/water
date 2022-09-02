@@ -17,6 +17,7 @@ class AppController extends GetxService {
   @override
   void onInit() {
       scrapyManufacturer();
+      scrapyBrand();
       super.onInit();
   }
 
@@ -57,14 +58,9 @@ class AppController extends GetxService {
         brand = cp949.decodeString(brand);
         List brands = brand.split(',');
         for (String brand in brands){
-          result.add([manufacturers, brand]);
+          result.add([manufacturer, brand.trimLeft()]);
         }
       }
-      // brand = cp949.decodeString(brand);
-      // List brands = brand.split(',');
-      // for (String brand in brands){
-      //   result.add([manufacturer, brand]);
-      // }
     }
     return result;
   }
