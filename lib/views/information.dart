@@ -23,7 +23,7 @@ class DirtyWater extends GetView<AppController> {
           ),  
       extendBodyBehindAppBar: true,
       body: Obx((() {
-        if (controller.getManufacturers.isEmpty)
+        if (controller.getResult.isEmpty)
           return Center(child: 
             Image.asset('assets/images/safeWater.png', width: 200.w, height: 200.h),);
         else
@@ -37,12 +37,18 @@ class DirtyWater extends GetView<AppController> {
             }),
           );
       })),
+      floatingActionButton: FloatingActionButton(  
+        child: Icon(Icons.find_replace_outlined),  
+        backgroundColor: Colors.blue,  
+        foregroundColor: Colors.white,  
+        onPressed: () => controller.scrapyBrand(),  
+      ),  
     );
   }
 
   Widget _ItemWidget(int index, List<List> result){
     return ListTile(
-      leading: const Icon(Icons.location_city),
+      leading: const Icon(Icons.water_drop_outlined),
       title: Text(result[index][1]),
       subtitle: Text(result[index][0])
     );

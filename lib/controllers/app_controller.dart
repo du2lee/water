@@ -55,11 +55,20 @@ class AppController extends GetxService {
       manufacturer = cp949.decodeString(manufacturer);
 
       if (manufacturers.contains(manufacturer)){
+        manufacturers.remove(manufacturer);
         brand = cp949.decodeString(brand);
         List brands = brand.split(',');
         for (String brand in brands){
           result.add([manufacturer, brand.trimLeft()]);
         }
+      }
+    }
+
+    // 예외 처리
+    if(manufacturers.isNotEmpty){
+      for (String manufacturer in manufacturers){
+        manufacturers.remove(manufacturer);
+        result.add([manufacturer, 'Not Found a Brand']);
       }
     }
     return result;
