@@ -34,12 +34,17 @@ class AppController extends GetxService {
     
     for (int i = 0 ; i < tr[0].length; i++){
       List data = tr[0][i].getElementsByClassName('al');
-      if (data[0].text == '먹는샘물' && data[1].text != '전체')
-        manufacturers.add(data[1].text);
+      if (data[0].text == '먹는샘물' && data[1].text != '전체'){
+        if(data[1].text[0] == '(')
+          manufacturers.add(data[1].text.substring(3));
+        else if(data[1].text[data[1].text.length - 1] == ')')
+          manufacturers.add(data[1].text.substring(0, data[1].text.length - 3));
+        else
+          manufacturers.add(data[1].text);
+      }
     }
     return manufacturers;
   }
-
 
   Future<List<List>> scrapyBrand() async {
     final response = await http.get(Uri.parse(brandUrl));
@@ -54,12 +59,16 @@ class AppController extends GetxService {
       String brand = tr[i].getElementsByTagName('td')[0].text;
       manufacturer = cp949.decodeString(manufacturer);
 
-      if (manufacturers.contains(manufacturer)){
-        manufacturers.remove(manufacturer);
-        brand = cp949.decodeString(brand);
-        List brands = brand.split(',');
-        for (String brand in brands){
-          result.add([manufacturer, brand.trimLeft()]);
+
+      for (int idx  = 0; idx < manufacturers.length; idx++){
+        if (manufacturer.contains(manufacturers[idx])){
+          manufacturers.remove(manufacturers[idx]);
+          brand = cp949.decodeString(brand);
+          List brands = brand.split(',');
+          for (String brand in brands){
+            result.add([manufacturer, brand.trimLeft()]);
+          }
+          break;
         }
       }
     }
@@ -67,10 +76,12 @@ class AppController extends GetxService {
     // 예외 처리
     if(manufacturers.isNotEmpty){
       for (String manufacturer in manufacturers){
-        manufacturers.remove(manufacturer);
-        result.add([manufacturer, 'Not Found a Brand']);
+        // manufacturers.remove(manufacturer);
+        result.add([manufacturer, 'Not Found']);
       }
+      manufacturers.clear();
     }
     return result;
+
   }
 }
